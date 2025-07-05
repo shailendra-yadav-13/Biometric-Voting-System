@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.voting-container {
+    background: rgba(255, 255, 255, 0.1);
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+}
+
+input, select {
+    width: 80%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 85%;
+    padding: 10px;
+    background: #16a085;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1abc9c;
+    transform: scale(1.05);
+}
+
+#fingerprintStatus {
+    font-weight: bold;
+    margin-top: 5px;
+}

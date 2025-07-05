@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Biometric Voting System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_styles.css') }}">
+    <style>
+        body {
+            background-color: #f4f7fc; /* Light gray background */
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        /* Section Titles */
+        section h3 {
+            color: #333;
+            font-size: 2em;
+            text-align: center;
+            padding-top: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Forms and Inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+            color: #333;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+            border: 1px solid #ddd;
+            background-color: #f4f7fc;
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            font-size: 1.1em;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f7fc;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Animation and Hover Effects */
+        .section {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input, button {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .form-group input:focus, button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 20px;
+            }
+
+            header h2 {
+                font-size: 2em;
+            }
+
+            section h3 {
+                font-size: 1.8em;
+            }
+
+            .form-group input, button {
+                font-size: 1em;
+                padding: 10px;
+            }
+
+            th, td {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header>
+            <h2>Welcome, {{ admin_id }}</h2>
+            <p>Manage the voting system securely.</p>
+        </header>
+
+        <!-- Candidate Management Section -->
+        <section class="candidate-section section">
+            <h3>Manage Candidates</h3>
+            <form action="/add_candidate" method="POST">
+                <div class="form-group">
+                    <label for="candidate_name">Candidate Name:</label>
+                    <input type="text" name="candidate_name" id="candidate_name" placeholder="Enter Candidate Name" required>
+                </div>
+                <button type="submit">Add Candidate</button>
+            </form>
+            <form action="/remove_candidate" method="POST">
+                <div class="form-group">
+                    <label for="remove_candidate_name">Remove Candidate:</label>
+                    <input type="text" name="remove_candidate_name" id="remove_candidate_name" placeholder="Enter Candidate Name" required>
+                </div>
+                <button type="submit" class="remove-btn">Remove Candidate</button>
+            </form>
+        </section>
+
+        <!-- Voting Results Section -->
+        <section class="results-section section">
+            <h3>Overall Voting Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Total Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for candidate, votes in results.items() %}
+                    <tr>
+                        <td>{{ candidate }}</td>
+                        <td>{{ votes }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Vote Records Section -->
+        <section class="vote-records-section section">
+            <h3>Vote Submission Records</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Voter Name</th>
+                        <th>Aadhaar Number</th>
+                        <th>Candidate Voted For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vote in vote_records %}
+                    <tr>
+                        <td>{{ vote.name }}</td>
+                        <td>{{ vote.aadhaar }}</td>
+                        <td>{{ vote.candidate }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Logout Button -->
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</body>
+</html>

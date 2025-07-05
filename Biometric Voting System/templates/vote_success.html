@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vote Submitted</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(-45deg, #eda024, #e9fc5c, #e1bee7, #e1151f);
+      background-size: 500% 500%;
+      animation: gradientMove 20s ease infinite;
+      flex-direction: column;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating circles background */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.2) 20%, transparent 20%),
+                        radial-gradient(circle, rgba(255,255,255,0.15) 20%, transparent 20%);
+      background-size: 60px 60px;
+      animation: floatBackground 60s linear infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      animation-direction: reverse;
+      opacity: 0.5;
+    }
+
+    @keyframes floatBackground {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .message {
+      font-size: 60px;
+      font-weight: 800;
+      color: #4CAF50;
+      text-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards, pulse 2s ease-in-out 2s infinite;
+      transition: transform 0.4s ease, text-shadow 0.4s ease;
+      z-index: 1;
+    }
+
+    .message:hover {
+      transform: scale(1.1);
+      text-shadow: 0 0 25px rgba(76, 175, 80, 0.8), 0 0 40px rgba(76, 175, 80, 0.6);
+    }
+
+    .subtext {
+      font-size: 22px;
+      color: #333;
+      margin-top: 14px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 1s;
+      z-index: 1;
+    }
+
+    .flower {
+      margin-top: 30px;
+      width: 260px;
+      height: auto;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards, float 5s ease-in-out infinite;
+      animation-delay: 2s;
+      transition: transform 0.4s ease;
+      z-index: 1;
+    }
+
+    .flower:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 480px) {
+      .message { font-size: 38px; }
+      .subtext { font-size: 16px; }
+      .flower { width: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="message">🎉 Congratulations! 🎉</div>
+  <div class="subtext">Your vote has been successfully submitted.</div>
+  
+</body>
+</html>

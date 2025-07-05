@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Page - Biometric Voting System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/voting_styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(-45deg, #f5f844, #ff6347, #6560f8, #e92a3a, #b625f4);
+            background-size: 400% 400%;
+            animation: backgroundColorChange 10s infinite alternate;
+            transition: all 0.3s ease;
+        }@keyframes backgroundColorChange {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .voting-container {
+        background: white;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 400px;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: slideIn 0.5s forwards;
+    }
+
+    @keyframes slideIn {
+        0% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 24px;
+        color: #333;
+    }
+
+    label {
+        display: block;
+        font-weight: 500;
+        margin-top: 10px;
+        color: #333;
+    }
+
+    input, select, button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
+        transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    input:focus, select:focus, button:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+</head>
+<body>
+    <div class="voting-container">
+        <h2>Secure Voting</h2>
+        <form id="votingForm" action="/submit_vote" method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required><label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="aadhaar">Aadhaar Number</label>
+        <input type="text" id="aadhaar" name="aadhaar" required pattern="\d{12}">
+
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" name="mobile" required pattern="\d{10}">
+        
+        <button type="button" id="sendOtp">Send OTP</button>
+        <input type="text" id="otp" name="otp" disabled>
+        <button type="button" id="verifyOtp">Verify OTP</button>
+        <p id="otpStatus" class="error">Not Verified</p>
+
+        <div id="votingSection" style="display:none;">
+            <label for="candidate">Select Candidate</label>
+            <select id="candidate" name="candidate" required>
+                <option value="">--Select--</option>
+                {% for candidate in candidates %}
+                <option value="{{ candidate }}">{{ candidate }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" id="voteButton" disabled>Vote</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("sendOtp").addEventListener("click", function() {
+        let mobile = document.getElementById("mobile").value;
+        if (mobile.length === 10) {
+            alert("OTP Sent Successfully!");
+            document.getElementById("otp").disabled = false;
+        } else {
+            alert("Enter a valid 10-digit mobile number.");
+        }
+    });
+
+    document.getElementById("verifyOtp").addEventListener("click", function() {
+        document.getElementById("otpStatus").innerText = "Verified ✅";
+        document.getElementById("otpStatus").classList.remove("error");
+        document.getElementById("otpStatus").classList.add("success");
+        document.getElementById("votingSection").style.display = "block";
+    });
+</script>
+
+</body>
+</html>
